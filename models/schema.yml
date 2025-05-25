@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Date dimension for use in all time-based analysis"
+    columns:
+      - name: date
+        description: "Primary key"
+        tests: [unique, not_null]
+
+  - name: transformed_personal_parkrun
+    description: "Fact table for personal parkrun results"
+    columns:
+      - name: "Run Date"
+        description: "Event date"
+      - name: vTotalSeconds
+        description: "Total finish time in seconds"
+      - name: decimal_age_grade
+        description: "Normalized performance"

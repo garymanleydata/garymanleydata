@@ -1,0 +1,7 @@
+version: 1
+
+sources:
+  - name: raw
+    schema: public                 # or your actual schema
+    tables:
+      - name: personal_parkrun_result
