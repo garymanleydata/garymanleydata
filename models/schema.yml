@@ -17,3 +17,12 @@ models:
         description: "Total finish time in seconds"
       - name: decimal_age_grade
         description: "Normalized performance"
+
+  - name: event_dim
+    description: "Dimension table of parkrun events"
+    columns:
+      - name: event_sk
+        description: "Surrogate key for event"
+        tests:
+          - not_null
+          - unique

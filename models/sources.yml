@@ -2,6 +2,9 @@ version: 1
 
 sources:
   - name: raw
-    schema: public                 # or your actual schema
+    schema: public                 
     tables:
       - name: personal_parkrun_result
+      - name: parkrun_sss_2025
+      - name: parkrun_event_details
+      - name: parkrun_event_location
