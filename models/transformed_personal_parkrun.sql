@@ -33,7 +33,7 @@ select c.*,
     CAST(split_part(CleanedTime, ':', 1) AS INT) * 60 + 
     CAST(split_part(CleanedTime, ':', 2) AS INT) AS vTotalSeconds, 
   ROUND(CAST(REPLACE("Age Grade", '%', '') AS numeric) / 100,4) AS decimalAG, 
-  case when "PB?" IS NULL THEN 'No' Else 'Yes' end as "PB Indicator"
+  case when "PB?" = 'PB' THEN 'Yes' Else 'No' end as "PB Indicator"
   from w_cleansed c
   )
   select c2.* , 
