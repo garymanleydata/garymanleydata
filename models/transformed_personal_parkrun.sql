@@ -2,7 +2,7 @@
 
 with w_cleansed as (
 SELECT
-  "Event",
+trim(regexp_replace(lower("Event"), '[\t\r\n]+', '')) as "Event",
   to_date("Run Date",'DD/MM/YYYY') "Run Date",
   "Run Number",
   "Pos",
@@ -37,5 +37,7 @@ select c.*,
   from w_cleansed c
   )
   select c2.* , 
-   vTotalSeconds = MIN(vTotalSeconds) OVER (ORDER BY "Run Date" ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS overall_pb
+   vTotalSeconds = MIN(vTotalSeconds) OVER (ORDER BY "Run Date" ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS overall_pb,
+   ed.event_sk
   FROM w_clean2 c2
+  INNER JOIN {{ ref('event_dim') }} ed on lower(c2."Event") = ed.event_name
