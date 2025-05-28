@@ -10,3 +10,4 @@ sources:
       - name: parkrun_event_location
       - name: landing_parkrun_event
         description: Raw weekly snapshot of parkrun event data from CSV
+      - name: weather_dim

@@ -38,6 +38,8 @@ select c.*,
   )
   select c2.* , 
    vTotalSeconds = MIN(vTotalSeconds) OVER (ORDER BY "Run Date" ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS overall_pb,
-   ed.event_sk
+   ed.event_sk, 
+   edl.event_sk as event_latest_sk
   FROM w_clean2 c2
   INNER JOIN {{ ref('event_dim') }} ed on lower(c2."Event") = ed.event_name
+  INNER JOIN {{ ref('parkrun_event_dim_latest') }} edl on replace(lower(c2."Event"),' ','') = edl.eventname
