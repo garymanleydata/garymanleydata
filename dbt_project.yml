@@ -42,3 +42,7 @@ models:
   Analytics:
     dim_date:
       materialized: table
+
+snapshots:
+  +schema: snapshots
+  +materialized: snapshot
