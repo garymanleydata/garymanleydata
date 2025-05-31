@@ -61,9 +61,9 @@ case
   when cloud_cover_pct < 0 then '<0'
   when cloud_cover_pct >= 100 then '100'
   else concat(cast(floor(cloud_cover_pct / 5.0) * 5 as int), '-', cast(floor(cloud_cover_pct / 5.0) * 5 + 4 as int))
-end as cloud_cover_bracket
-
-
-
+end as cloud_cover_bracket,
+case when bh.holiday_date is not null then 'Y' else 'N' end as holiday_flag, 
+bh.holiday_name
 FROM date_range dr
 LEFT OUTER JOIN {{ source('raw', 'weather_dim') }} wd ON dr.date_day = wd.weather_date
+LEFT OUTER JOIN {{ source('raw', 'land_bank_holiday') }} bh ON dr.date_day = bh.holiday_date
