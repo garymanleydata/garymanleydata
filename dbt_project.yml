@@ -40,7 +40,13 @@ version: '1.0'
 
 models:
   Analytics:
-    dim_date:
+    date_dim:
+      materialized: table
+    event_dim:
+      materialized: table
+    parkrun_event_dim_latest:
+      materialized: table
+    transformed_personal_parkrun:
       materialized: table
 
 snapshots:
