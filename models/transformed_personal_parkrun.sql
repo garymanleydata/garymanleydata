@@ -2,7 +2,7 @@
 
 with w_cleansed as (
 SELECT
-  "Event",
+trim(regexp_replace(lower("Event"), '[\t\r\n]+', '')) as "Event",
   to_date("Run Date",'DD/MM/YYYY') "Run Date",
   "Run Number",
   "Pos",
@@ -33,9 +33,13 @@ select c.*,
     CAST(split_part(CleanedTime, ':', 1) AS INT) * 60 + 
     CAST(split_part(CleanedTime, ':', 2) AS INT) AS vTotalSeconds, 
   ROUND(CAST(REPLACE("Age Grade", '%', '') AS numeric) / 100,4) AS decimalAG, 
-  case when "PB?" IS NULL THEN 'No' Else 'Yes' end as "PB Indicator"
+  case when "PB?" = 'PB' THEN 'Yes' Else 'No' end as "PB Indicator"
   from w_cleansed c
   )
   select c2.* , 
-   vTotalSeconds = MIN(vTotalSeconds) OVER (ORDER BY "Run Date" ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS overall_pb
+   vTotalSeconds = MIN(vTotalSeconds) OVER (ORDER BY "Run Date" ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS overall_pb,
+   ed.event_sk, 
+   edl.event_sk as event_latest_sk
   FROM w_clean2 c2
+  INNER JOIN {{ ref('event_dim') }} ed on lower(c2."Event") = ed.event_name
+  INNER JOIN {{ ref('parkrun_event_dim_latest') }} edl on replace(lower(c2."Event"),' ','') = edl.eventname

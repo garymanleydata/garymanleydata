@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: dim_date
+  - name: date_dim
     description: "Date dimension for use in all time-based analysis"
     columns:
       - name: date
@@ -17,3 +17,57 @@ models:
         description: "Total finish time in seconds"
       - name: decimal_age_grade
         description: "Normalized performance"
+
+  - name: event_dim
+    description: "Dimension table of parkrun events"
+    columns:
+      - name: event_sk
+        description: "Surrogate key for event"
+        tests:
+          - not_null
+          - unique
+
+  - name: parkrun_event_dim_latest
+    description: >
+      Latest dimension table of all parkrun events derived from the SCD2 snapshot.
+      Includes only the current (non-expired) records for each event.
+
+    columns:
+      - name: event_sk
+        description: Surrogate key for the event, taken from "parkrun ID".
+        tests:
+          - not_null
+          - unique
+
+      - name: eventname
+        description: Short event identifier used in URLs.
+      - name: EventLongName
+        description: Full display name of the parkrun event.
+      - name: EventShortName
+        description: Shortened version or nickname of the event.
+      - name: Country Name
+        description: Country in which the parkrun takes place.
+      - name: LocalisedEventLongName
+        description: Localised translation of the event's name (if applicable).
+      - name: countrycode
+        description: Numeric code for the country.
+      - name: seriesid
+        description: Grouping ID across similar events.
+      - name: EventLocation
+        description: Location or park where the event is held.
+      - name: Longitude
+        description: Longitude coordinate of the event.
+      - name: Latitude
+        description: Latitude coordinate of the event.
+      - name: Region
+        description: Region ID within the country.
+      - name: Region Name
+        description: Human-readable name of the region.
+      - name: Status
+        description: Current status of the event (e.g., live, closed).
+      - name: Background Comment
+        description: Notes or context about the event.
+      - name: URL
+        description: URL to the official parkrun event page.
+      - name: Final Run
+        description: Date of final parkrun event if the event has been retired.

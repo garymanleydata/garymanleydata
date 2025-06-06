@@ -2,6 +2,14 @@ version: 1
 
 sources:
   - name: raw
-    schema: public                 # or your actual schema
+    schema: public                 
     tables:
       - name: personal_parkrun_result
+      - name: parkrun_sss_2025
+      - name: parkrun_event_details
+      - name: parkrun_event_location
+      - name: landing_parkrun_event
+        description: Raw weekly snapshot of parkrun event data from CSV
+      - name: weather_dim
+      - name: land_bank_holiday
+      - name: landing_weather_forecast
