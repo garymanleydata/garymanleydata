@@ -1,0 +1,80 @@
+version: 2
+
+snapshots:
+  - name: scd2_weather_forecast
+    description: >
+      SCD2 snapshot of daily 9am weather forecasts for Eastbourne.
+      Tracks historical changes over time in temperature, wind, humidity, etc.
+
+    columns:
+      - name: forecast_time
+        description: The datetime for which the weather forecast applies (usually 9am).
+      - name: location
+        description: Fixed location for the forecast, currently 'Eastbourne'.
+      - name: temperature_c
+        description: Forecast temperature in degrees Celsius.
+      - name: wind_speed_kmh
+        description: Forecast wind speed at 10m above ground in km/h.
+      - name: wind_gusts_kmh
+        description: Forecast wind gusts at 10m in km/h.
+      - name: humidity_pct
+        description: Forecast relative humidity at 2m in percentage.
+      - name: precip_mm
+        description: Forecast precipitation in millimetres.
+      - name: cloud_cover_pct
+        description: Forecast cloud cover in percentage.
+
+      # dbt-managed SCD2 columns
+      - name: dbt_scd_id
+        description: Unique identifier for each version of a snapshot row.
+      - name: dbt_valid_from
+        description: Timestamp when this version became valid.
+      - name: dbt_valid_to
+        description: Timestamp when this version ended (null = current version).
+
+  - name: parkrun_event_snapshot
+    description: >
+      SCD2 snapshot of all known parkrun event metadata as extracted from the master event list CSV.
+      Tracks name, location, country, region, and status changes over time.
+
+    columns:
+      - name: "parkrun ID"
+        description: Unique identifier for each parkrun event.
+      - name: "eventname"
+        description: Short event name (used in URL slugs).
+      - name: "EventLongName"
+        description: Full long-form name of the event.
+      - name: "EventShortName"
+        description: Short name or abbreviation of the event.
+      - name: "Country Name"
+        description: Name of the country where the event is hosted.
+      - name: "countrycode"
+        description: Numeric code representing the country.
+      - name: "LocalisedEventLongName"
+        description: Translated version of the event name if available.
+      - name: "seriesid"
+        description: Series ID from the parkrun data (usually constant).
+      - name: "EventLocation"
+        description: The location field shown on the parkrun website.
+      - name: "Longitude"
+        description: Event longitude in decimal degrees.
+      - name: "Latitude"
+        description: Event latitude in decimal degrees.
+      - name: "Region"
+        description: Region code within the country.
+      - name: "Region Name"
+        description: Human-readable name of the region.
+      - name: "Status"
+        description: Event status, e.g. live or inactive.
+      - name: "Background Comment"
+        description: Comments from HQ or update notes about the event.
+      - name: "URL"
+        description: URL to the parkrun event page.
+      - name: "Final Run"
+        description: Date of last event if permanently closed.
+      - name: dbt_scd_id
+        description: Unique hash of each versioned row.
+      - name: dbt_valid_from
+        description: Timestamp when the snapshot version became valid.
+      - name: dbt_valid_to
+        description: Timestamp when the version ended (null = current).
