@@ -24,7 +24,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
 models:
-  Analytics:
+  analytics:
     date_dim:
       materialized: table
     event_dim:
