@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: dim_date
+  - name: date_dim
     description: "Date dimension for use in all time-based analysis"
     columns:
       - name: date
